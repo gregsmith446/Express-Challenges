@@ -1,0 +1,22 @@
+{
+  "name": "express-challenges",
+  "version": "1.0.0",
+  "description": "codeschool challenges",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregsmith446/Express-Challenges.git"
+  },
+  "author": "Greg Smith",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gregsmith446/Express-Challenges/issues"
+  },
+  "homepage": "https://github.com/gregsmith446/Express-Challenges#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
