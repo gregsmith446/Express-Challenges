@@ -3,14 +3,39 @@ var app = express();
 
 app.use(express.static('public'));
 
+var bodyParser = require('body-parser');
+var parseUrlencoded = bodyParser.urlencoded({ extended: false });
+
  var cities = {
-        'New York': 'New York',
-        'Boston': 'Mass',
-        'Providence': 'Rhode Island',
-        'Hartford': 'Connecticut',
-        'Concord': 'New Hampshire'
+        'Albany': 'NY',
+        'Boston': 'MA',
+        'Providence': 'RI',
+        'Hartford': 'CT',
+        'Concord': 'NH'
    };
    
+app.post('/cities', parseUrlencoded, function(request, response){
+    var newCity = request.body;
+    cities[newCity.name] = newCity.description;
+    response.status(201).json = newCity.description;
+});
+
+app.delete('/cities/:name', function(request, response) {
+    delete cities[request.cityName];
+    response.sendStatus(200);
+});
+   
+app.param('name', function(request, response,next) {
+    var name = request.params.name;
+    var city = name[0].toUpperCase() + name.slice(1).toLowerCase(); //normalize name
+
+    //request.blockName = block;
+    request.cityName = city
+    
+    next();
+})   
+
+// curl http://localhost:8080/cities?limit=3
 app.get('/cities', function(request, response) {
     if (request.query.limit >= 1 && request.query.limit <= 5) {
         response.json(Object.keys(cities).slice(0, request.query.limit));
@@ -22,9 +47,7 @@ app.get('/cities', function(request, response) {
 });   
 
 app.get('/cities/:name', function(request, response){
-    var name = request.params.name; //the value of city
-    var block = name[0].toUpperCase() + name.slice(1).toLowerCase(); //normalize name
-    var description = cities[block];
+    var description = cities[request.cityName];
     if (!description) {
         response.status(404).json('No description found for ' + request.params.name);
     } else {
@@ -34,36 +57,3 @@ app.get('/cities/:name', function(request, response){
 
 
 app.listen(process.env.PORT)
-
-
-
-
-
-
-
-
-// Lesson 1
-// app.get('/', function(request, response) {
-//     response.send('Helloooooo Worlddddd\n'); // \n puts on new line
-// });
-
-// app.get('/name', function(request, response) {
-//     var name = "Greg Smith\n";
-//     response.redirect(301, '/surprise'); //redirect with moved permanently code
-//     response.send(name);
-// });
-
-// app.get('/date', function(request, response) {
-//     var today = new Date();
-//     response.send(today); 
-// });
-
-// app.listen(process.env.PORT, function() {
-//     console.log('listening on port 3000');
-// });
-
-// // can also write the first function like this in node HTTP syntax
-// // app.get('/', function(request, response) {
-// //     response.write("Hello World");
-// //     response.end(); 
-// // });
