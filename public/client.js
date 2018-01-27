@@ -1,4 +1,6 @@
 /*global $ cities */
+
+// Lesson 2 - displaying cities in a list
 $(function(){
 
     $.get('/cities', appendToList);
