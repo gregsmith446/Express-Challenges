@@ -11,16 +11,15 @@
     <h1>Cities</h1>
 
     <form>
-        <legend>City List</legend>
-        <input name="name" placeholder="City"><br/>
-        <input name="description" placeholder="State"><br/>
+        <input type="text" name="addCity" placeholder="city"><br/>
+        <input type="text" name="state" placeholder="state"><br/>
         <input type="Submit">
+        <ul class="cities-list"></ul>
     </form>
 
     <form>
-        <section>
-            <ul class="cities-list"></ul>
-        </section>
+        <div id="displayState">
+        </div>
     </form>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
